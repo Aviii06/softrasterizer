@@ -1,15 +1,13 @@
-pub use crate::pixel::Pixel;
-
 pub struct FrameBuffer {
-    width: i32,
-    height: i32,
-    pixels: Vec<Pixel>,
+    pub width: i32,
+    pub height: i32,
+    pub pixels: Vec<crate::pixel::Pixel>,
 }
 
 impl FrameBuffer {
-    pub fn  new(width: i32, height: i32) -> Self {
+    pub fn new(width: i32, height: i32) -> Self {
         let size = width * height;
-        let px = Pixel::new();
+        let px = crate::pixel::Pixel::new();
         let pxs = vec![px; size as usize];
         // for i in 0..size {
         //     pxs.push(px.clone())
@@ -21,7 +19,7 @@ impl FrameBuffer {
         }
     }
 
-    pub fn clearBuffer(&mut self, px: Pixel) {
+    pub fn clearBuffer(&mut self, px: crate::pixel::Pixel) {
         self.pixels.iter_mut().for_each(|p| {
             p.r = px.r;
             p.g = px.g;
@@ -32,5 +30,9 @@ impl FrameBuffer {
 
     pub fn print(&self) {
         self.pixels.iter().for_each(|p| p.print())
+    }
+
+    pub fn getPixel(&self, x: i32, y: i32) -> crate::pixel::Pixel {
+        self.pixels[(y * self.width + x) as usize].clone()
     }
 }
